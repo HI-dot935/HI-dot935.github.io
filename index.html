@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HI-dot935 (aka W-G-M) — Cybersec Guy</title>
+<meta name="description" content="HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy. Security audits, blue teaming, red teaming, a bit of pentest, prompt engineering & social engineering. GitHub: hi-dot935">
+
+<!-- ============================================================
+     EDIT ME: search for these tokens and replace with your info
+     NAME     -> "HI-dot935"
+     HANDLE   -> "hi-dot935"
+     TAGLINE  -> "Grey Hat Red Teamer · Cybersec Guy"
+     LINKS    -> github/linkedin/twitter hrefs near the footer
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:            #0b0e13;
+    --panel:         #12161d;
+    --panel-raised:  #171c25;
+    --line:          #232a35;
+    --text:          #c9d3dc;
+    --text-dim:      #6b7685;
+    --amber:         #ff9d2e;
+    --amber-dim:     #ff9d2e33;
+    --teal:          #4fd1c5;
+    --red:           #ff5d5d;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, #1a2230 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 20%, #14202066 0%, transparent 55%);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  a{ color: inherit; }
+
+  ::selection{ background: var(--amber-dim); color: #fff; }
+
+  /* ---------- scanline atmosphere ---------- */
+  .scanlines{
+    position: fixed; inset: 0; pointer-events: none; z-index: 2;
+    background: repeating-linear-gradient(
+      to bottom, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px,
+      transparent 1px, transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .wrap{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    border-bottom: 1px solid var(--line);
+    background: #0b0e13cc;
+    backdrop-filter: blur(6px);
+    position: sticky; top:0; z-index: 10;
+  }
+  .topbar .wrap{
+    display:flex; align-items:center; justify-content: space-between;
+    height: 56px;
+  }
+  .brand{
+    font-family: var(--mono); font-weight:700; font-size: 14px;
+    letter-spacing: 0.02em; color:#e8edf2;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .dot{
+    width:8px; height:8px; border-radius:50%; background: var(--amber);
+    box-shadow: 0 0 8px 2px var(--amber-dim);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  nav{ display:flex; gap: 22px; font-family: var(--mono); font-size: 12px; }
+  nav a{ text-decoration:none; color: var(--text-dim); transition: color .15s; }
+  nav a:hover{ color: var(--amber); }
+  @media (max-width: 640px){ nav{ display:none; } }
+
+  /* ---------- hero: boot terminal ---------- */
+  .hero{ padding: 64px 0 40px; }
+  .terminal{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .terminal-head{
+    display:flex; align-items:center; gap:8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel-raised);
+  }
+  .terminal-head span{ width:10px; height:10px; border-radius:50%; }
+  .terminal-head span:nth-child(1){ background:#ff5f57 }
+  .terminal-head span:nth-child(2){ background:#febc2e }
+  .terminal-head span:nth-child(3){ background:#28c840 }
+  .terminal-head small{
+    margin-left: 8px; font-family: var(--mono); color: var(--text-dim); font-size: 11px;
+  }
+  .terminal-body{
+    padding: 26px 22px 30px;
+    font-family: var(--mono);
+    font-size: 14px;
+    min-height: 190px;
+  }
+  .terminal-body .line{ margin-bottom: 6px; color: var(--text-dim); }
+  .terminal-body .prompt{ color: var(--teal); }
+  .terminal-body .out{ color: var(--text); }
+  .terminal-body .headline{
+    font-size: clamp(28px, 4.6vw, 46px);
+    font-weight: 800;
+    color: #f2f5f8;
+    margin: 14px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .terminal-body .role{
+    color: var(--amber); font-size: 15px; margin-bottom: 16px;
+  }
+  .cursor{
+    display:inline-block; width: 9px; height: 18px; background: var(--amber);
+    vertical-align: -3px; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .hero-tags{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 18px; }
+  .tag{
+    font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+    border: 1px solid var(--line); padding: 5px 10px; border-radius: 5px;
+  }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 54px 0; border-top: 1px solid var(--line); }
+  .section-label{
+    font-family: var(--mono); font-size: 12px; color: var(--amber);
+    letter-spacing: 0.08em; margin-bottom: 6px;
+  }
+  .section-label::before{ content: "[ "; color: var(--text-dim); }
+  .section-label::after{ content: " ]"; color: var(--text-dim); }
+  h2.section-title{
+    font-family: var(--mono); font-size: 22px; color: #eef2f6; margin-bottom: 26px;
+    font-weight: 700;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap: 34px;
+  }
+  @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-text p{ margin-bottom: 14px; color: var(--text); font-size: 15px; }
+  .about-text strong{ color: #eef2f6; }
+  .stat-card{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .stat-card .num{
+    font-family: var(--mono); font-size: 26px; color: var(--amber); font-weight: 700;
+  }
+  .stat-card .label{ font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ---------- skills as a "port scan" table ---------- */
+  .scan-table{
+    width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  }
+  .scan-table thead th{
+    text-align:left; padding: 12px 16px; color: var(--text-dim); font-weight: 500;
+    border-bottom: 1px solid var(--line); background: var(--panel-raised);
+    font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .scan-table tbody td{
+    padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: middle;
+  }
+  .scan-table tbody tr:last-child td{ border-bottom: none; }
+  .scan-table tbody tr:hover{ background: #1a212c; }
+  .state-open{ color: var(--teal); }
+  .state-open::before{ content:"● "; }
+  .bar{
+    height: 5px; background: #1c232d; border-radius: 3px; overflow: hidden; width: 100%;
+  }
+  .bar span{
+    display:block; height: 100%; background: linear-gradient(90deg, var(--amber), #ffc46b);
+  }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{ position: relative; padding-left: 26px; }
+  .timeline::before{
+    content:""; position:absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--line);
+  }
+  .tl-item{ position: relative; margin-bottom: 30px; }
+  .tl-item::before{
+    content:""; position:absolute; left: -26px; top: 4px; width: 11px; height: 11px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--amber);
+  }
+  .tl-item .tl-date{ font-family: var(--mono); font-size: 11px; color: var(--amber); margin-bottom: 4px; }
+  .tl-item h3{ font-size: 16px; color: #eef2f6; margin-bottom: 4px; }
+  .tl-item .tl-org{ font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+  .tl-item p{ font-size: 14px; color: var(--text); }
+
+  /* ---------- projects ---------- */
+  .proj-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 700px){ .proj-grid{ grid-template-columns: 1fr; } }
+  .proj-card{
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 20px; transition: border-color .15s, transform .15s;
+  }
+  .proj-card:hover{ border-color: var(--amber-dim); transform: translateY(-2px); }
+  .proj-card .proj-head{ display:flex; justify-content: space-between; align-items:start; margin-bottom: 8px; }
+  .proj-card h3{ font-size: 15px; color: #eef2f6; font-family: var(--mono); }
+  .proj-card .sev{
+    font-family: var(--mono); font-size: 10px; padding: 3px 7px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .sev-crit{ background: #ff5d5d22; color: var(--red); }
+  .sev-high{ background: #ff9d2e22; color: var(--amber); }
+  .sev-med{ background: #4fd1c522; color: var(--teal); }
+  .proj-card p{ font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
+  .proj-card .stack{ display:flex; gap:6px; flex-wrap: wrap; }
+  .proj-card .stack span{
+    font-family: var(--mono); font-size: 10px; color: var(--text-dim);
+    border: 1px solid var(--line); padding: 3px 7px; border-radius: 4px;
+  }
+  .proj-link{
+    display:inline-block; margin-top: 12px; font-family: var(--mono); font-size: 12px;
+    color: var(--teal); text-decoration: none; border-bottom: 1px solid transparent;
+  }
+  .proj-link:hover{ border-color: var(--teal); }
+
+  /* ---------- contact ---------- */
+  .contact-box{
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 32px; text-align:center;
+  }
+  .contact-box .section-label{ justify-content:center; display:flex; }
+  .contact-box p{ color: var(--text-dim); margin-bottom: 22px; font-size: 14px; }
+  .contact-links{ display:flex; gap: 14px; justify-content:center; flex-wrap: wrap; }
+  .contact-links a{
+    font-family: var(--mono); font-size: 13px; padding: 10px 18px;
+    border: 1px solid var(--line); border-radius: 6px; text-decoration: none;
+    color: var(--text); transition: all .15s;
+  }
+  .contact-links a:hover{ border-color: var(--amber); color: var(--amber); }
+
+  footer{
+    border-top: 1px solid var(--line); padding: 24px 0 40px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-align: center;
+  }
+
+  :focus-visible{ outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>hi-dot935@root</div>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#github">github</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="terminal">
+      <div class="terminal-head">
+        <span></span><span></span><span></span>
+        <small>hi-dot935 — bash — 80x24</small>
+      </div>
+      <div class="terminal-body" id="termBody">
+        <!-- filled by JS boot sequence -->
+      </div>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">3+ yrs poking at security stuff</span>
+      <span class="tag">Grey hat · red teamer</span>
+      <span class="tag">Prompt engineering &amp; social engineering</span>
+      <span class="tag">More GitHub work than certs</span>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-label">about</div>
+    <h2 class="section-title">Who's behind the shell</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>I'm HI-dot935</strong> (aka <strong>W-G-M</strong>) — a grey hat, mostly self-taught cybersec guy who's been in it since late 2022. I'm not here to sell you a resume full of certs; most of what I know shows up in my GitHub, not on paper.</p>
+        <p>I've done a handful of <strong>security audits</strong>, dabbled in <strong>blue team</strong> work, red-teamed a few boxes for fun and practice, and picked up a bit of <strong>pentesting</strong> along the way. Where I'm genuinely strong is <strong>prompt engineering</strong> and <strong>social engineering</strong> — getting systems and people to do things they weren't supposed to.</p>
+        <p>Most of this has been self-driven, project-based learning. Check the repos below — that's the real changelog of what I've been building since 2022.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="num">3+ yrs</div><div class="label">Since late 2022</div></div>
+        <div class="stat-card"><div class="num">few</div><div class="label">Boxes red-teamed for practice</div></div>
+        <div class="stat-card"><div class="num">n/a</div><div class="label">Certs — GitHub &gt; paper</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-label">nmap -sV --majors</div>
+    <h2 class="section-title">Majors &amp; things I've tweaked with</h2>
+    <table class="scan-table">
+      <thead>
+        <tr><th>Domain</th><th>State</th><th>Proficiency</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Prompt Engineering</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:92%"></span></div></td>
+        </tr>
+        <tr>
+          <td>Social Engineering</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:88%"></span></div></td>
+        </tr>
+        <tr>
+          <td>Red Teaming (boxes, for practice)</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:65%"></span></div></td>
+        </tr>
+        <tr>
+          <td>Security Audits</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:60%"></span></div></td>
+        </tr>
+        <tr>
+          <td>Blue Teaming</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:55%"></span></div></td>
+        </tr>
+        <tr>
+          <td>Pentesting</td>
+          <td class="state-open">open</td>
+          <td><div class="bar"><span style="width:50%"></span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-label">github.com/hi-dot935</div>
+    <h2 class="section-title">Selected repositories</h2>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-head"><h3>Altered-WGM</h3><span class="sev sev-high">active</span></div>
+        <p>A tweaked OSINT tool — modified for faster, more targeted open-source recon and info gathering.</p>
+        <div class="stack"><span>OSINT</span><span>Python</span></div>
+        <a class="proj-link" href="https://github.com/HI-dot935/Altered-WGM">view repo →</a>
+      </div>
+      <div class="proj-card">
+        <div class="proj-head"><h3>WGM-AI-Personal-Assistant</h3><span class="sev sev-high">active</span></div>
+        <p>A J.A.R.V.I.S-inspired personal assistant — holds conversations, searches the web, controls apps, and runs voice commands through a custom browser interface.</p>
+        <div class="stack"><span>Python</span><span>Flask</span><span>OpenRouter</span><span>Voice</span></div>
+        <a class="proj-link" href="https://github.com/HI-dot935/WGM-AI-PERSONAL-ASSISTANT">view repo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="github">
+  <div class="wrap">
+    <div class="contact-box">
+      <div class="contact-links">
+        <a href="https://github.com/hi-dot935">HI-dot935 on GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    // HI-dot935 (aka W-G-M)
+  </div>
+</footer>
+
+<script>
+(function(){
+  const body = document.getElementById('termBody');
+  const preLines = [
+    { prompt: 'root@hi-dot935:~$', text: 'whoami' },
+  ];
+  const output = [
+    'HI-DOT935',
+  ];
+
+  function typeLine(el, text, speed, cb){
+    let i = 0;
+    const span = document.createElement('span');
+    el.appendChild(span);
+    const t = setInterval(() => {
+      span.textContent += text.charAt(i);
+      i++;
+      if (i >= text.length){ clearInterval(t); if(cb) cb(); }
+    }, speed);
+  }
+
+  function addLine(html){
+    const div = document.createElement('div');
+    div.className = 'line';
+    div.innerHTML = html;
+    body.appendChild(div);
+    return div;
+  }
+
+  // line 1: prompt + typed command
+  const l1 = addLine('<span class="prompt">root@hi-dot935:~$</span> ');
+  const cmdSpan = document.createElement('span');
+  cmdSpan.className = 'out';
+  l1.appendChild(cmdSpan);
+  const cursor1 = document.createElement('span');
+  cursor1.className = 'cursor';
+  l1.appendChild(cursor1);
+
+  typeLine(cmdSpan, 'whoami', 70, () => {
+    cursor1.remove();
+    setTimeout(() => {
+      const headline = document.createElement('div');
+      headline.className = 'headline';
+      body.appendChild(headline);
+      typeLine(headline, 'HI-DOT935', 55, () => {
+        const role = addLine('');
+        role.className = 'role';
+        role.textContent = 'aka W-G-M · Grey Hat Red Teamer / Cybersec Guy'.replace('&amp;','&');
+
+        setTimeout(() => {
+          const l2 = addLine('<span class="prompt">root@hi-dot935:~$</span> ');
+          const cmd2 = document.createElement('span');
+          cmd2.className = 'out';
+          l2.appendChild(cmd2);
+          const cursor2 = document.createElement('span');
+          cursor2.className = 'cursor';
+          l2.appendChild(cursor2);
+          typeLine(cmd2, 'cat mission.txt', 55, () => {
+            cursor2.remove();
+            const l3 = addLine('');
+            l3.className = 'line out';
+            l3.style.color = 'var(--text)';
+            l3.textContent = '> Building the journey since late 2022.';
+          });
+        }, 400);
+      });
+    }, 300);
+  });
+})();
+</script>
+
+</body>
+</html>
