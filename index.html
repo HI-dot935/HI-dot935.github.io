@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HI-dot935 — Official Website | W-G-M</title>
 <meta name="description" content="HI-dot935 (aka W-G-M) is the official website of HI-dot935 — a grey hat red teamer and cybersecurity practitioner. Covers security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering, plus open-source projects on GitHub.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="HI-dot935 (W-G-M)">
 <link rel="canonical" href="https://hi-dot935.github.io/">
+<link rel="sitemap" type="application/xml" href="https://hi-dot935.github.io/sitemap.xml">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -19,18 +22,45 @@
 <meta name="twitter:title" content="HI-dot935 — Official Website | W-G-M">
 <meta name="twitter:description" content="Official website of HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy.">
 
-<!-- Structured data: identifies HI-dot935 as the person/persona behind this site -->
+<!-- Structured data: identifies HI-dot935 as the person/persona behind this site,
+     and the site itself as a distinct WebSite entity authored by that person.
+     Using @graph lets both entities be declared once and cross-referenced,
+     instead of duplicating fields across two separate <script> blocks. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "HI-dot935",
-  "alternateName": "W-G-M",
-  "url": "https://hi-dot935.github.io/",
-  "sameAs": [
-    "https://github.com/HI-dot935"
-  ],
-  "description": "HI-dot935 (aka W-G-M) is a grey hat red teamer and cybersecurity practitioner focused on security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering."
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://hi-dot935.github.io/#person",
+      "name": "HI-dot935",
+      "alternateName": "W-G-M",
+      "url": "https://hi-dot935.github.io/",
+      "sameAs": [
+        "https://github.com/HI-dot935",
+        "https://wgmmyjourney.blogspot.com/"
+      ],
+      "description": "HI-dot935 (aka W-G-M) is a grey hat red teamer and cybersecurity practitioner focused on security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering.",
+      "knowsAbout": [
+        "Security Audits",
+        "Blue Teaming",
+        "Red Teaming",
+        "Penetration Testing",
+        "Prompt Engineering",
+        "Social Engineering"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hi-dot935.github.io/#website",
+      "url": "https://hi-dot935.github.io/",
+      "name": "HI-dot935 — Official Website",
+      "description": "Official website of HI-dot935 (aka W-G-M).",
+      "author": { "@id": "https://hi-dot935.github.io/#person" },
+      "publisher": { "@id": "https://hi-dot935.github.io/#person" },
+      "inLanguage": "en"
+    }
+  ]
 }
 </script>
 
