@@ -3,8 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HI-dot935 (aka W-G-M) — Cybersec Guy</title>
-<meta name="description" content="HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy. Security audits, blue teaming, red teaming, a bit of pentest, prompt engineering & social engineering. GitHub: hi-dot935">
+<title>HI-dot935 — Official Website | W-G-M</title>
+<meta name="description" content="HI-dot935 (aka W-G-M) is the official website of HI-dot935 — a grey hat red teamer and cybersecurity practitioner. Covers security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering, plus open-source projects on GitHub.">
+<link rel="canonical" href="https://hi-dot935.github.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="HI-dot935 — Official Website | W-G-M">
+<meta property="og:description" content="Official website of HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy. Security audits, blue teaming, red teaming, pentesting, prompt engineering &amp; social engineering.">
+<meta property="og:url" content="https://hi-dot935.github.io/">
+<meta property="og:site_name" content="HI-dot935">
+
+<!-- Twitter/X card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HI-dot935 — Official Website | W-G-M">
+<meta name="twitter:description" content="Official website of HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy.">
+
+<!-- Structured data: identifies HI-dot935 as the person/persona behind this site -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "HI-dot935",
+  "alternateName": "W-G-M",
+  "url": "https://hi-dot935.github.io/",
+  "sameAs": [
+    "https://github.com/HI-dot935"
+  ],
+  "description": "HI-dot935 (aka W-G-M) is a grey hat red teamer and cybersecurity practitioner focused on security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering."
+}
+</script>
 
 <!-- ============================================================
      EDIT ME: search for these tokens and replace with your info
@@ -300,7 +328,11 @@
         <small>hi-dot935 — bash — 80x24</small>
       </div>
       <div class="terminal-body" id="termBody">
-        <!-- filled by JS boot sequence -->
+        <div class="line"><span class="prompt">root@hi-dot935:~$</span> <span class="out">whoami</span></div>
+        <h1 class="headline">HI-DOT935</h1>
+        <div class="role">aka W-G-M · Grey Hat Red Teamer / Cybersec Guy</div>
+        <!-- JS below re-types this sequence for the animated boot effect;
+             the markup above ensures the identity is present in the raw HTML for crawlers -->
       </div>
     </div>
     <div class="hero-tags">
@@ -315,12 +347,12 @@
 <section id="about">
   <div class="wrap">
     <div class="section-label">about</div>
-    <h2 class="section-title">Who's behind the shell</h2>
+    <h2 class="section-title">Who is HI-dot935?</h2>
     <div class="about-grid">
       <div class="about-text">
-        <p><strong>I'm HI-dot935</strong> (aka <strong>W-G-M</strong>) — a grey hat, mostly self-taught cybersec guy who's been in it since late 2022. I'm not here to sell you a resume full of certs; most of what I know shows up in my GitHub, not on paper.</p>
+        <p><strong>HI-dot935</strong> (also known as <strong>W-G-M</strong>) is a grey hat, mostly self-taught cybersec guy who's been in it since late 2022. This site is the official web presence for HI-dot935 — not here to sell you a resume full of certs; most of what I know shows up in my GitHub, not on paper.</p>
         <p>I've done a handful of <strong>security audits</strong>, dabbled in <strong>blue team</strong> work, red-teamed a few boxes for fun and practice, and picked up a bit of <strong>pentesting</strong> along the way. Where I'm genuinely strong is <strong>prompt engineering</strong> and <strong>social engineering</strong> — getting systems and people to do things they weren't supposed to.</p>
-        <p>Most of this has been self-driven, project-based learning. Check the repos below — that's the real changelog of what I've been building since 2022.</p>
+        <p>Most of this has been self-driven, project-based learning. The <a href="#projects">projects below</a> and the repos on <a href="#github">GitHub</a> are the real changelog of what HI-dot935 / W-G-M has been building since 2022.</p>
       </div>
       <div class="about-stats">
         <div class="stat-card"><div class="num">3+ yrs</div><div class="label">Since late 2022</div></div>
@@ -379,7 +411,7 @@
   <div class="wrap">
     <div class="section-label">github.com/hi-dot935</div>
     <h2 class="section-title">Selected repositories</h2>
-    <p style="font-family: var(--mono); font-size: 12px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px;">// a couple of examples — not the full picture, check GitHub for more</p>
+    <p style="font-family: var(--mono); font-size: 12px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px;">// a couple of examples from HI-dot935's GitHub — not the full picture, check the profile for more</p>
     <div class="proj-grid">
       <div class="proj-card">
         <div class="proj-head"><h3>Altered-WGM</h3><span class="sev sev-high">active</span></div>
@@ -406,6 +438,8 @@
 <section id="github">
   <div class="wrap">
     <div class="contact-box">
+      <div class="section-label">official github</div>
+      <p>All of HI-dot935's public repos, commit history, and active projects live here — this is the canonical GitHub account tied to this website.</p>
       <div class="contact-links">
         <a href="https://github.com/hi-dot935">HI-dot935 on GitHub ↗</a>
       </div>
@@ -415,19 +449,15 @@
 
 <footer>
   <div class="wrap">
-    // HI-dot935 (aka W-G-M)
+    // HI-dot935 (aka W-G-M) — official website
   </div>
 </footer>
 
 <script>
 (function(){
   const body = document.getElementById('termBody');
-  const preLines = [
-    { prompt: 'root@hi-dot935:~$', text: 'whoami' },
-  ];
-  const output = [
-    'HI-DOT935',
-  ];
+  // Clear the static (crawler-visible) fallback markup, then replay the animated boot sequence.
+  body.innerHTML = '';
 
   function typeLine(el, text, speed, cb){
     let i = 0;
@@ -460,13 +490,13 @@
   typeLine(cmdSpan, 'whoami', 70, () => {
     cursor1.remove();
     setTimeout(() => {
-      const headline = document.createElement('div');
+      const headline = document.createElement('h1');
       headline.className = 'headline';
       body.appendChild(headline);
       typeLine(headline, 'HI-DOT935', 55, () => {
         const role = addLine('');
         role.className = 'role';
-        role.textContent = 'aka W-G-M · Grey Hat Red Teamer / Cybersec Guy'.replace('&amp;','&');
+        role.textContent = 'aka W-G-M · Grey Hat Red Teamer / Cybersec Guy';
 
         setTimeout(() => {
           const l2 = addLine('<span class="prompt">root@hi-dot935:~$</span> ');
