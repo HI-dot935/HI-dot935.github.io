@@ -7,7 +7,10 @@
 <meta name="description" content="HI-dot935 (aka W-G-M) is the official website of HI-dot935 — a grey hat red teamer and cybersecurity practitioner. Covers security audits, blue teaming, red teaming, pentesting, prompt engineering and social engineering, plus open-source projects on GitHub.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="HI-dot935 (W-G-M)">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rpU5ohCQw2oLBvdNyVQGr4GkRJ/QekTsC5upXJUcxTY=' 'sha256-Qe+lI8pGOHtpwNqFD/EBNb5UztEkPcCtpK53ow1bvnw=' 'sha256-myPLWZpnaaxDnsg3qKaDr0I7GUmzIB8XpVWjULFeTsc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://github.com https://*.githubusercontent.com data:; connect-src https://612.swarguptaswargupta.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests;">
+
+<!-- UPDATED CSP: allow inline scripts to avoid hash errors -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://github.com https://*.githubusercontent.com data:; connect-src https://612.swarguptaswargupta.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests;">
+
 <link rel="canonical" href="https://hi-dot935.github.io/">
 <link rel="sitemap" type="application/xml" href="https://hi-dot935.github.io/sitemap.xml">
 
@@ -58,7 +61,6 @@
   ]
 }
 </script>
-
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -323,13 +325,12 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- 🛡️ ULTIMATE ANTI-DEVTOOLS – DETECTS DOCKED DEVTOOLS WITHIN 50ms -->
+<!-- 🛡️ ULTIMATE ANTI-DEVTOOLS – Works even if DevTools is undocked -->
 <!-- ============================================================ -->
 <script>
 (function() {
     let triggered = false;
 
-    // Helper: Show No Internet screen (only once)
     function showNoInternet() {
         if (triggered) return;
         if (document.body.innerHTML.includes('ERR_INTERNET_DISCONNECTED')) return;
@@ -379,53 +380,59 @@
         document.title = 'No Internet';
     }
 
-    // ---------- METHOD 1: Size Difference (Low Threshold = 20px) ----------
-    // This catches DevTools if it's DOCKED (attached to the browser window).
-    function checkSize() {
-        if (triggered) return;
-        const widthDiff = window.outerWidth - window.innerWidth;
-        const heightDiff = window.outerHeight - window.innerHeight;
-        // Lowered threshold to 20px – catches even a tiny DevTools panel.
-        if (widthDiff > 20 || heightDiff > 20) {
-            showNoInternet();
-        }
-    }
-
-    // ---------- METHOD 2: Debugger Timing (works if "Pause on debugger" is enabled) ----------
-    function checkDebugger() {
-        if (triggered) return;
-        const start = performance.now();
-        debugger;
-        const end = performance.now();
-        // If DevTools is open AND paused, this takes > 20ms.
-        if (end - start > 20) {
-            showNoInternet();
-        }
-    }
-
-    // ---------- METHOD 3: Console.log Override Trap ----------
-    // If someone opens the Console tab, this catches it.
+    // ---------- METHOD 1: Console.log trap (catches Console tab) ----------
     const originalLog = console.log;
     console.log = function() {
         showNoInternet();
         originalLog.apply(console, arguments);
     };
-    // Force an immediate log to catch if DevTools was open BEFORE page load.
+    // Force a log to catch if DevTools was already open on load.
     console.log('devtools-check');
 
-    // ---------- METHOD 4: Aggressive Polling (every 50ms) ----------
+    // ---------- METHOD 2: toString trap (fires when DevTools inspects objects) ----------
+    const devtools = /./;
+    devtools.toString = function() {
+        if (this === devtools) showNoInternet();
+    };
+
+    // ---------- METHOD 3: Element getter trap (fires on DOM inspection) ----------
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() { showNoInternet(); }
+    });
+
+    // ---------- METHOD 4: Size difference (catches docked DevTools) ----------
+    function checkSize() {
+        if (triggered) return;
+        const widthDiff = window.outerWidth - window.innerWidth;
+        const heightDiff = window.outerHeight - window.innerHeight;
+        if (widthDiff > 20 || heightDiff > 20) {
+            showNoInternet();
+        }
+    }
+
+    // ---------- METHOD 5: Debugger timing (catches if pause-on-debugger is enabled) ----------
+    function checkDebugger() {
+        if (triggered) return;
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        if (end - start > 20) {
+            showNoInternet();
+        }
+    }
+
+    // ---------- POLL aggressively ----------
     setInterval(() => {
         checkSize();
         checkDebugger();
-    }, 50); // 50ms = 20 times per second. Very aggressive.
+    }, 100);
 
-    // ---------- METHOD 5: Block ALL Keyboard Shortcuts ----------
+    // ---------- Block keyboard shortcuts ----------
     document.addEventListener('keydown', function(e) {
-        // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C (Inspect Element)
         if (e.key === 'F12' ||
             (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
             (e.ctrlKey && e.key === 'U') ||
-            // Mac Cmd equivalents
             (e.metaKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
             (e.metaKey && e.key === 'U')) {
             e.preventDefault();
@@ -434,26 +441,17 @@
         }
     });
 
-    // ---------- METHOD 6: Block Right-Click (Inspect) ----------
+    // ---------- Block right-click ----------
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         showNoInternet();
         return false;
     });
 
-    // ---------- METHOD 7: Detect if the page is resized weirdly (DevTools toggle) ----------
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-    setInterval(() => {
-        if (triggered) return;
-        if (window.innerWidth !== lastWidth || window.innerHeight !== lastHeight) {
-            // If dimensions change, run the size check again.
-            checkSize();
-        }
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
-    }, 100);
-
+    // ---------- Extra: Detect iframe embedding ----------
+    if (window.top !== window.self) {
+        showNoInternet();
+    }
 })();
 </script>
 
@@ -608,6 +606,7 @@
   </div>
 </footer>
 
+<!-- Matrix Rain -->
 <script>
 (function(){
   const canvas = document.getElementById('matrixRain');
@@ -649,6 +648,7 @@
 })();
 </script>
 
+<!-- Terminal Typing Effect -->
 <script>
 (function(){
   const body = document.getElementById('termBody');
@@ -714,7 +714,7 @@
 })();
 </script>
 
-<!-- ✅ FETCH TO WORKER – No useless ?key= parameter -->
+<!-- ✅ FETCH TO WORKER – sends ping, no ?key= parameter -->
 <script>
 fetch('https://612.swarguptaswargupta.workers.dev/', { mode: 'no-cors' }).catch(() => {});
 </script>
