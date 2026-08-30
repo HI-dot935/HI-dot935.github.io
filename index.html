@@ -10,22 +10,16 @@
 <link rel="canonical" href="https://hi-dot935.github.io/">
 <link rel="sitemap" type="application/xml" href="https://hi-dot935.github.io/sitemap.xml">
 
-<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="HI-dot935 — Official Website | W-G-M">
 <meta property="og:description" content="Official website of HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy. Security audits, blue teaming, red teaming, pentesting, prompt engineering &amp; social engineering.">
 <meta property="og:url" content="https://hi-dot935.github.io/">
 <meta property="og:site_name" content="HI-dot935">
 
-<!-- Twitter/X card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HI-dot935 — Official Website | W-G-M">
 <meta name="twitter:description" content="Official website of HI-dot935 (aka W-G-M) — grey hat red teamer / cybersec guy.">
 
-<!-- Structured data: identifies HI-dot935 as the person/persona behind this site,
-     and the site itself as a distinct WebSite entity authored by that person.
-     Using @graph lets both entities be declared once and cross-referenced,
-     instead of duplicating fields across two separate <script> blocks. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -64,13 +58,6 @@
 }
 </script>
 
-<!-- ============================================================
-     EDIT ME: search for these tokens and replace with your info
-     NAME     -> "HI-dot935"
-     HANDLE   -> "hi-dot935"
-     TAGLINE  -> "Grey Hat Red Teamer · Cybersec Guy"
-     LINKS    -> github/linkedin/twitter hrefs near the footer
-     ============================================================ -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,8 +102,7 @@
 
   ::selection{ background: var(--amber-dim); color: #fff; }
 
-  /* ---------- scanline atmosphere ---------- */
-  .scanlines{
+    .scanlines{
     position: fixed; inset: 0; pointer-events: none; z-index: 2;
     background: repeating-linear-gradient(
       to bottom, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px,
@@ -131,8 +117,7 @@
     padding: 0 28px;
   }
 
-  /* ---------- top bar ---------- */
-  .topbar{
+    .topbar{
     border-bottom: 1px solid var(--line);
     background: #0b0e13cc;
     backdrop-filter: blur(6px);
@@ -159,8 +144,7 @@
   nav a:hover{ color: var(--amber); }
   @media (max-width: 640px){ nav{ display:none; } }
 
-  /* ---------- hero: boot terminal ---------- */
-  .hero{ padding: 64px 0 40px; }
+    .hero{ padding: 64px 0 40px; }
   .terminal{
     background: var(--panel);
     border: 1px solid var(--line);
@@ -212,8 +196,7 @@
     border: 1px solid var(--line); padding: 5px 10px; border-radius: 5px;
   }
 
-  /* ---------- section shell ---------- */
-  section{ padding: 54px 0; border-top: 1px solid var(--line); }
+    section{ padding: 54px 0; border-top: 1px solid var(--line); }
   .section-label{
     font-family: var(--mono); font-size: 12px; color: var(--amber);
     letter-spacing: 0.08em; margin-bottom: 6px;
@@ -225,8 +208,7 @@
     font-weight: 700;
   }
 
-  /* ---------- about ---------- */
-  .about-grid{
+    .about-grid{
     display:grid; grid-template-columns: 1.3fr 1fr; gap: 34px;
   }
   @media (max-width: 760px){ .about-grid{ grid-template-columns: 1fr; } }
@@ -244,8 +226,7 @@
   }
   .stat-card .label{ font-size: 12px; color: var(--text-dim); margin-top: 2px; }
 
-  /* ---------- skills as a "port scan" table ---------- */
-  .scan-table{
+    .scan-table{
     width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13px;
     background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
   }
@@ -268,8 +249,7 @@
     display:block; height: 100%; background: linear-gradient(90deg, var(--amber), #ffc46b);
   }
 
-  /* ---------- experience timeline ---------- */
-  .timeline{ position: relative; padding-left: 26px; }
+    .timeline{ position: relative; padding-left: 26px; }
   .timeline::before{
     content:""; position:absolute; left: 6px; top: 6px; bottom: 6px; width: 1px; background: var(--line);
   }
@@ -283,8 +263,7 @@
   .tl-item .tl-org{ font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
   .tl-item p{ font-size: 14px; color: var(--text); }
 
-  /* ---------- projects ---------- */
-  .proj-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .proj-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
   @media (max-width: 700px){ .proj-grid{ grid-template-columns: 1fr; } }
   .proj-card{
     background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
@@ -312,8 +291,7 @@
   }
   .proj-link:hover{ border-color: var(--teal); }
 
-  /* ---------- contact ---------- */
-  .contact-box{
+    .contact-box{
     background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
     padding: 32px; text-align:center;
   }
@@ -333,9 +311,16 @@
   }
 
   :focus-visible{ outline: 2px solid var(--amber); outline-offset: 2px; }
+
+  #matrixRain{
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none;
+    opacity: 0.16;
+  }
 </style>
 </head>
 <body>
+<canvas id="matrixRain"></canvas>
 <div class="scanlines"></div>
 
 <div class="topbar">
@@ -361,9 +346,7 @@
         <div class="line"><span class="prompt">root@hi-dot935:~$</span> <span class="out">whoami</span></div>
         <h1 class="headline">HI-DOT935</h1>
         <div class="role">aka W-G-M · Grey Hat Red Teamer / Cybersec Guy</div>
-        <!-- JS below re-types this sequence for the animated boot effect;
-             the markup above ensures the identity is present in the raw HTML for crawlers -->
-      </div>
+              </div>
     </div>
     <div class="hero-tags">
       <span class="tag">3+ yrs poking at security stuff</span>
@@ -485,8 +468,48 @@
 
 <script>
 (function(){
+  const canvas = document.getElementById('matrixRain');
+  const ctx = canvas.getContext('2d');
+  let width, height, columns, drops;
+  const chars = '01アイウエオカキクケコサシスセソABCDEFHI-dot935W-G-M$#@%&';
+  const fontSize = 15;
+  const colors = ['#4fd1c5', '#ff9d2e'];
+
+  function resize(){
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / fontSize);
+    drops = new Array(columns).fill(1);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function draw(){
+    ctx.fillStyle = 'rgba(11,14,19,0.08)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++){
+      const char = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillStyle = colors[Math.random() > 0.85 ? 1 : 0];
+      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > height && Math.random() > 0.975){
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    setInterval(draw, 45);
+  }
+})();
+</script>
+
+<script>
+(function(){
   const body = document.getElementById('termBody');
-  // Clear the static (crawler-visible) fallback markup, then replay the animated boot sequence.
   body.innerHTML = '';
 
   function typeLine(el, text, speed, cb){
@@ -508,7 +531,6 @@
     return div;
   }
 
-  // line 1: prompt + typed command
   const l1 = addLine('<span class="prompt">root@hi-dot935:~$</span> ');
   const cmdSpan = document.createElement('span');
   cmdSpan.className = 'out';
@@ -551,7 +573,6 @@
 </script>
 
 <script>
-// Visitor alert beacon — fires once per page load, fails silently if blocked
 fetch('https://612.swarguptaswargupta.workers.dev/?key=vAu-Zqy8Wnc1sVy-8p4VsQ', { mode: 'no-cors' }).catch(() => {});
 </script>
 
