@@ -323,171 +323,15 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- 🛡️ ANTI-DEVTOOLS SCRIPT – Shows "No Internet" if DevTools opens -->
+<!-- 🛡️ ULTRA ANTI-DEVTOOLS – WORKS CONSTANTLY ON THE PAGE         -->
 <!-- ============================================================ -->
 <script>
 (function() {
-    // Method 1: Detect DevTools via element
-    const devtools = /./;
-    devtools.toString = function() {
-        if (this === devtools) {
-            document.body.innerHTML = `
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body {
-                        background: #1a1a1a;
-                        color: #c0c0c0;
-                        font-family: 'Segoe UI', Tahoma, sans-serif;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        min-height: 100vh;
-                        padding: 20px;
-                    }
-                    .error-container {
-                        max-width: 500px;
-                        text-align: center;
-                    }
-                    .error-icon {
-                        font-size: 64px;
-                        margin-bottom: 20px;
-                        color: #ff6b6b;
-                    }
-                    .error-title {
-                        font-size: 28px;
-                        font-weight: 700;
-                        color: #ffffff;
-                        margin-bottom: 10px;
-                    }
-                    .error-sub {
-                        font-size: 16px;
-                        color: #a0a0a0;
-                        margin-bottom: 20px;
-                    }
-                    .error-list {
-                        text-align: left;
-                        background: #2a2a2a;
-                        padding: 16px 20px;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        color: #d0d0d0;
-                        list-style: none;
-                    }
-                    .error-list li {
-                        padding: 4px 0;
-                        padding-left: 24px;
-                        position: relative;
-                    }
-                    .error-list li::before {
-                        content: "•";
-                        position: absolute;
-                        left: 0;
-                        color: #ff6b6b;
-                    }
-                    .error-code {
-                        margin-top: 16px;
-                        font-size: 13px;
-                        color: #666;
-                        font-family: monospace;
-                    }
-                </style>
-                <div class="error-container">
-                    <div class="error-icon">🌐</div>
-                    <div class="error-title">No Internet</div>
-                    <div class="error-sub">Try:</div>
-                    <ul class="error-list">
-                        <li>Checking the network cables, modem and router</li>
-                        <li>Reconnecting to Wi-Fi</li>
-                    </ul>
-                    <div class="error-code">ERR_INTERNET_DISCONNECTED</div>
-                </div>
-            `;
-            document.title = 'No Internet';
-        }
-    };
-
-    // Method 2: Detect DevTools via element size
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-        get: function() {
-            document.body.innerHTML = `
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body {
-                        background: #1a1a1a;
-                        color: #c0c0c0;
-                        font-family: 'Segoe UI', Tahoma, sans-serif;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        min-height: 100vh;
-                        padding: 20px;
-                    }
-                    .error-container {
-                        max-width: 500px;
-                        text-align: center;
-                    }
-                    .error-icon {
-                        font-size: 64px;
-                        margin-bottom: 20px;
-                        color: #ff6b6b;
-                    }
-                    .error-title {
-                        font-size: 28px;
-                        font-weight: 700;
-                        color: #ffffff;
-                        margin-bottom: 10px;
-                    }
-                    .error-sub {
-                        font-size: 16px;
-                        color: #a0a0a0;
-                        margin-bottom: 20px;
-                    }
-                    .error-list {
-                        text-align: left;
-                        background: #2a2a2a;
-                        padding: 16px 20px;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        color: #d0d0d0;
-                        list-style: none;
-                    }
-                    .error-list li {
-                        padding: 4px 0;
-                        padding-left: 24px;
-                        position: relative;
-                    }
-                    .error-list li::before {
-                        content: "•";
-                        position: absolute;
-                        left: 0;
-                        color: #ff6b6b;
-                    }
-                    .error-code {
-                        margin-top: 16px;
-                        font-size: 13px;
-                        color: #666;
-                        font-family: monospace;
-                    }
-                </style>
-                <div class="error-container">
-                    <div class="error-icon">🌐</div>
-                    <div class="error-title">No Internet</div>
-                    <div class="error-sub">Try:</div>
-                    <ul class="error-list">
-                        <li>Checking the network cables, modem and router</li>
-                        <li>Reconnecting to Wi-Fi</li>
-                    </ul>
-                    <div class="error-code">ERR_INTERNET_DISCONNECTED</div>
-                </div>
-            `;
-            document.title = 'No Internet';
-        }
-    });
-
-    // Method 3: Disable right-click
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
+    // Helper function to show the No Internet screen
+    function showNoInternet() {
+        // Prevent infinite loops if already triggered
+        if (document.body.innerHTML.includes('ERR_INTERNET_DISCONNECTED')) return;
+        
         document.body.innerHTML = `
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -501,26 +345,10 @@
                     min-height: 100vh;
                     padding: 20px;
                 }
-                .error-container {
-                    max-width: 500px;
-                    text-align: center;
-                }
-                .error-icon {
-                    font-size: 64px;
-                    margin-bottom: 20px;
-                    color: #ff6b6b;
-                }
-                .error-title {
-                    font-size: 28px;
-                    font-weight: 700;
-                    color: #ffffff;
-                    margin-bottom: 10px;
-                }
-                .error-sub {
-                    font-size: 16px;
-                    color: #a0a0a0;
-                    margin-bottom: 20px;
-                }
+                .error-container { max-width: 500px; text-align: center; }
+                .error-icon { font-size: 64px; margin-bottom: 20px; color: #ff6b6b; }
+                .error-title { font-size: 28px; font-weight: 700; color: #ffffff; margin-bottom: 10px; }
+                .error-sub { font-size: 16px; color: #a0a0a0; margin-bottom: 20px; }
                 .error-list {
                     text-align: left;
                     background: #2a2a2a;
@@ -530,23 +358,9 @@
                     color: #d0d0d0;
                     list-style: none;
                 }
-                .error-list li {
-                    padding: 4px 0;
-                    padding-left: 24px;
-                    position: relative;
-                }
-                .error-list li::before {
-                    content: "•";
-                    position: absolute;
-                    left: 0;
-                    color: #ff6b6b;
-                }
-                .error-code {
-                    margin-top: 16px;
-                    font-size: 13px;
-                    color: #666;
-                    font-family: monospace;
-                }
+                .error-list li { padding: 4px 0; padding-left: 24px; position: relative; }
+                .error-list li::before { content: "•"; position: absolute; left: 0; color: #ff6b6b; }
+                .error-code { margin-top: 16px; font-size: 13px; color: #666; font-family: monospace; }
             </style>
             <div class="error-container">
                 <div class="error-icon">🌐</div>
@@ -560,174 +374,76 @@
             </div>
         `;
         document.title = 'No Internet';
-        return false;
+    }
+
+    // ---------- METHOD 1: Console.log trap ----------
+    // If DevTools tries to log anything, the screen triggers.
+    const originalLog = console.log;
+    console.log = function() {
+        showNoInternet();
+        originalLog.apply(console, arguments);
+    };
+
+    // ---------- METHOD 2: toString trap (fires when DevTools inspects) ----------
+    const devtools = /./;
+    devtools.toString = function() {
+        if (this === devtools) showNoInternet();
+    };
+
+    // ---------- METHOD 3: Element ID getter trap ----------
+    // Fires when DevTools tries to read the element's properties.
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() { showNoInternet(); }
     });
 
-    // Method 4: Detect DevTools via debugger statement
-    function detectDevTools() {
-        const start = performance.now();
-        debugger;
-        const end = performance.now();
-        if (end - start > 100) {
-            document.body.innerHTML = `
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body {
-                        background: #1a1a1a;
-                        color: #c0c0c0;
-                        font-family: 'Segoe UI', Tahoma, sans-serif;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        min-height: 100vh;
-                        padding: 20px;
-                    }
-                    .error-container {
-                        max-width: 500px;
-                        text-align: center;
-                    }
-                    .error-icon {
-                        font-size: 64px;
-                        margin-bottom: 20px;
-                        color: #ff6b6b;
-                    }
-                    .error-title {
-                        font-size: 28px;
-                        font-weight: 700;
-                        color: #ffffff;
-                        margin-bottom: 10px;
-                    }
-                    .error-sub {
-                        font-size: 16px;
-                        color: #a0a0a0;
-                        margin-bottom: 20px;
-                    }
-                    .error-list {
-                        text-align: left;
-                        background: #2a2a2a;
-                        padding: 16px 20px;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        color: #d0d0d0;
-                        list-style: none;
-                    }
-                    .error-list li {
-                        padding: 4px 0;
-                        padding-left: 24px;
-                        position: relative;
-                    }
-                    .error-list li::before {
-                        content: "•";
-                        position: absolute;
-                        left: 0;
-                        color: #ff6b6b;
-                    }
-                    .error-code {
-                        margin-top: 16px;
-                        font-size: 13px;
-                        color: #666;
-                        font-family: monospace;
-                    }
-                </style>
-                <div class="error-container">
-                    <div class="error-icon">🌐</div>
-                    <div class="error-title">No Internet</div>
-                    <div class="error-sub">Try:</div>
-                    <ul class="error-list">
-                        <li>Checking the network cables, modem and router</li>
-                        <li>Reconnecting to Wi-Fi</li>
-                    </ul>
-                    <div class="error-code">ERR_INTERNET_DISCONNECTED</div>
-                </div>
-            `;
-            document.title = 'No Internet';
+    // ---------- METHOD 4: Window size difference (detects docked DevTools) ----------
+    function detectDevToolsBySize() {
+        const threshold = 100;
+        const widthDiff = window.outerWidth - window.innerWidth;
+        const heightDiff = window.outerHeight - window.innerHeight;
+        if (widthDiff > threshold || heightDiff > threshold) {
+            showNoInternet();
         }
     }
 
-    // Run detection every second
-    setInterval(detectDevTools, 1000);
+    // ---------- METHOD 5: Debugger pause detection (improved) ----------
+    function detectDevToolsDebugger() {
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        // If DevTools is open and paused, this takes > 50ms.
+        // If not, it takes less than 1ms.
+        if (end - start > 50) {
+            showNoInternet();
+        }
+    }
 
-    // Detect key combinations (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U)
+    // Run checks aggressively every 300ms (0.3 seconds)
+    setInterval(() => {
+        detectDevToolsBySize();
+        detectDevToolsDebugger();
+    }, 300);
+
+    // ---------- Block keyboard shortcuts ----------
     document.addEventListener('keydown', function(e) {
+        // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         if (e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
             (e.ctrlKey && e.key === 'U')) {
             e.preventDefault();
-            document.body.innerHTML = `
-                <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body {
-                        background: #1a1a1a;
-                        color: #c0c0c0;
-                        font-family: 'Segoe UI', Tahoma, sans-serif;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        min-height: 100vh;
-                        padding: 20px;
-                    }
-                    .error-container {
-                        max-width: 500px;
-                        text-align: center;
-                    }
-                    .error-icon {
-                        font-size: 64px;
-                        margin-bottom: 20px;
-                        color: #ff6b6b;
-                    }
-                    .error-title {
-                        font-size: 28px;
-                        font-weight: 700;
-                        color: #ffffff;
-                        margin-bottom: 10px;
-                    }
-                    .error-sub {
-                        font-size: 16px;
-                        color: #a0a0a0;
-                        margin-bottom: 20px;
-                    }
-                    .error-list {
-                        text-align: left;
-                        background: #2a2a2a;
-                        padding: 16px 20px;
-                        border-radius: 8px;
-                        font-size: 14px;
-                        color: #d0d0d0;
-                        list-style: none;
-                    }
-                    .error-list li {
-                        padding: 4px 0;
-                        padding-left: 24px;
-                        position: relative;
-                    }
-                    .error-list li::before {
-                        content: "•";
-                        position: absolute;
-                        left: 0;
-                        color: #ff6b6b;
-                    }
-                    .error-code {
-                        margin-top: 16px;
-                        font-size: 13px;
-                        color: #666;
-                        font-family: monospace;
-                    }
-                </style>
-                <div class="error-container">
-                    <div class="error-icon">🌐</div>
-                    <div class="error-title">No Internet</div>
-                    <div class="error-sub">Try:</div>
-                    <ul class="error-list">
-                        <li>Checking the network cables, modem and router</li>
-                        <li>Reconnecting to Wi-Fi</li>
-                    </ul>
-                    <div class="error-code">ERR_INTERNET_DISCONNECTED</div>
-                </div>
-            `;
-            document.title = 'No Internet';
+            showNoInternet();
             return false;
         }
     });
+
+    // ---------- Block right-click (prevents "Inspect") ----------
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        showNoInternet();
+        return false;
+    });
+
 })();
 </script>
 
@@ -988,7 +704,7 @@
 })();
 </script>
 
-<!-- 🟢 FETCH TO WORKER – Removed the useless ?key= parameter -->
+<!-- ✅ FETCH TO WORKER – No useless ?key= parameter -->
 <script>
 fetch('https://612.swarguptaswargupta.workers.dev/', { mode: 'no-cors' }).catch(() => {});
 </script>
