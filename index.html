@@ -323,13 +323,12 @@
 <body>
 
 <!-- ============================================================ -->
-<!-- 🛡️ ULTRA ANTI-DEVTOOLS – WORKS CONSTANTLY ON THE PAGE         -->
+<!-- 🛡️ SUPER ANTI-DEVTOOLS – 7 Detection Methods, runs every 100ms -->
 <!-- ============================================================ -->
 <script>
 (function() {
-    // Helper function to show the No Internet screen
+    // Helper function to show No Internet screen
     function showNoInternet() {
-        // Prevent infinite loops if already triggered
         if (document.body.innerHTML.includes('ERR_INTERNET_DISCONNECTED')) return;
         
         document.body.innerHTML = `
@@ -377,12 +376,13 @@
     }
 
     // ---------- METHOD 1: Console.log trap ----------
-    // If DevTools tries to log anything, the screen triggers.
     const originalLog = console.log;
     console.log = function() {
         showNoInternet();
         originalLog.apply(console, arguments);
     };
+    // Force a console.log to trigger immediately if DevTools is open
+    console.log('check');
 
     // ---------- METHOD 2: toString trap (fires when DevTools inspects) ----------
     const devtools = /./;
@@ -391,7 +391,6 @@
     };
 
     // ---------- METHOD 3: Element ID getter trap ----------
-    // Fires when DevTools tries to read the element's properties.
     const element = new Image();
     Object.defineProperty(element, 'id', {
         get: function() { showNoInternet(); }
@@ -399,7 +398,7 @@
 
     // ---------- METHOD 4: Window size difference (detects docked DevTools) ----------
     function detectDevToolsBySize() {
-        const threshold = 100;
+        const threshold = 80;
         const widthDiff = window.outerWidth - window.innerWidth;
         const heightDiff = window.outerHeight - window.innerHeight;
         if (widthDiff > threshold || heightDiff > threshold) {
@@ -412,37 +411,72 @@
         const start = performance.now();
         debugger;
         const end = performance.now();
-        // If DevTools is open and paused, this takes > 50ms.
-        // If not, it takes less than 1ms.
-        if (end - start > 50) {
+        // If DevTools is open and paused, this takes > 30ms
+        if (end - start > 30) {
             showNoInternet();
         }
     }
 
-    // Run checks aggressively every 300ms (0.3 seconds)
+    // ---------- METHOD 6: Firebug detection (old but works) ----------
+    function detectFirebug() {
+        if (window.console && window.console.firebug) {
+            showNoInternet();
+        }
+    }
+
+    // ---------- METHOD 7: Detect if DevTools is open via element inspection ----------
+    let devtoolsOpen = false;
+    const detectElement = document.createElement('div');
+    Object.defineProperty(detectElement, 'id', {
+        get: function() {
+            devtoolsOpen = true;
+            showNoInternet();
+        }
+    });
+    // This triggers when DevTools tries to inspect the element
+
+    // Run ALL checks aggressively every 100ms
     setInterval(() => {
         detectDevToolsBySize();
         detectDevToolsDebugger();
-    }, 300);
+        detectFirebug();
+        // Also check if console.log was overridden (if someone restored it)
+        if (console.log !== originalLog) {
+            showNoInternet();
+        }
+    }, 100);
 
     // ---------- Block keyboard shortcuts ----------
     document.addEventListener('keydown', function(e) {
-        // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         if (e.key === 'F12' || 
             (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-            (e.ctrlKey && e.key === 'U')) {
+            (e.ctrlKey && e.key === 'U') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'C')) {
             e.preventDefault();
             showNoInternet();
             return false;
         }
     });
 
-    // ---------- Block right-click (prevents "Inspect") ----------
+    // ---------- Block right-click ----------
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
         showNoInternet();
         return false;
     });
+
+    // ---------- Extra: Detect if DevTools is open via the "inspect" element ----------
+    // This is a sneaky one – if the user tries to inspect an element, it triggers.
+    document.addEventListener('DOMNodeRemoved', function(e) {
+        if (e.target.id === 'devtools-detector') {
+            showNoInternet();
+        }
+    });
+
+    // ---------- Final check: If the page is in an iframe, kill it ----------
+    if (window.top !== window.self) {
+        showNoInternet();
+    }
 
 })();
 </script>
